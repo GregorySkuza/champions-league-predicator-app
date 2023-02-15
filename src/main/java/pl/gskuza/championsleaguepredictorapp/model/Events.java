@@ -1,15 +1,13 @@
 package pl.gskuza.championsleaguepredictorapp.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @JsonPropertyOrder({
         "sport_event_id",
@@ -32,7 +30,7 @@ public class Events implements Serializable {
     @JsonProperty("sport_event_id")
     private String sportEventId;
     @JsonProperty("start_date")
-    private ZonedDateTime startDate;
+    private String startDate;
     @JsonProperty("sport_name")
     private String sportName;
     @JsonProperty("competition_name")
@@ -41,23 +39,25 @@ public class Events implements Serializable {
     private String competitionId;
     @JsonProperty("season_name")
     private String seasonName;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JsonProperty("competitors")
     private List<Competitor> competitors;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn
     @JsonProperty("venue")
     private Venue venue;
     @JsonProperty("probability_home_team_winner")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private double probabilityHomeTeamWinner;
     @JsonProperty("probability_draw")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private double probabilityDraw;
     @JsonProperty("probability_away_team_winner")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private double probabilityAwayTeamWinner;
     public Events() {
     }
-
-    public Events(Long eventsId, String sportEventId, ZonedDateTime startDate, String sportName, String competitionName, String competitionId, String seasonName,
+    public Events(Long eventsId, String sportEventId, String startDate, String sportName, String competitionName, String competitionId, String seasonName,
                   List<Competitor> competitors, Venue venue, double probabilityHomeTeamWinner, double probabilityDraw, double probabilityAwayTeamWinner) {
         this.sportEventId = sportEventId;
         this.startDate = startDate;
@@ -88,11 +88,11 @@ public class Events implements Serializable {
         this.sportEventId = sportEventId;
     }
     @JsonProperty("start_date")
-    public ZonedDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
     @JsonProperty("start_date")
-    public void setStartDate(ZonedDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
     @JsonProperty("sport_name")
@@ -129,7 +129,6 @@ public class Events implements Serializable {
     }
     @JsonProperty("competitors")
     public List<Competitor> getCompetitors() {return competitors; }
-
     @JsonProperty("competitors")
     public void setCompetitors(List<Competitor> competitors) {
     this.competitors = competitors;
@@ -166,7 +165,6 @@ public class Events implements Serializable {
     public void setProbabilityAwayTeamWinner(double probabilityAwayTeamWinner) {
         this.probabilityAwayTeamWinner = probabilityAwayTeamWinner;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -174,12 +172,10 @@ public class Events implements Serializable {
         Events events = (Events) o;
         return Double.compare(events.probabilityHomeTeamWinner, probabilityHomeTeamWinner) == 0 && Double.compare(events.probabilityDraw, probabilityDraw) == 0 && Double.compare(events.probabilityAwayTeamWinner, probabilityAwayTeamWinner) == 0 && Objects.equals(eventsId, events.eventsId) && Objects.equals(sportEventId, events.sportEventId) && Objects.equals(startDate, events.startDate) && Objects.equals(sportName, events.sportName) && Objects.equals(competitionName, events.competitionName) && Objects.equals(competitionId, events.competitionId) && Objects.equals(seasonName, events.seasonName) && Objects.equals(competitors, events.competitors) && Objects.equals(venue, events.venue);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(eventsId, sportEventId, startDate, sportName, competitionName, competitionId, seasonName, competitors, venue, probabilityHomeTeamWinner, probabilityDraw, probabilityAwayTeamWinner);
     }
-
     @Override
     public String toString() {
         return "Events{" +
