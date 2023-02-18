@@ -4,23 +4,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.gskuza.championsleaguepredictorapp.model.Competitor;
 import pl.gskuza.championsleaguepredictorapp.model.Events;
 import pl.gskuza.championsleaguepredictorapp.model.EventsContainer;
 import pl.gskuza.championsleaguepredictorapp.service.EventsServiceImpl;
 import java.io.*;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/events")
 public class EventsController {
     private final ObjectMapper objectMapper;
     private final EventsServiceImpl eventsServiceImpl;
-
     public EventsController(EventsServiceImpl eventsServiceImpl, ObjectMapper objectMapper) {
         this.eventsServiceImpl = eventsServiceImpl;
         this.objectMapper= objectMapper;
     }
-
     @GetMapping("/json/events")
     public EventsContainer getItemFromJson() throws IOException {
       return objectMapper.readValue(new File("src/main/resources/BE_data.json"), EventsContainer.class);
@@ -38,5 +38,18 @@ public class EventsController {
     public ResponseEntity<?> deleteAllEvents() {
         eventsServiceImpl.deleteAllEvents();
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/get/json/competitors")
+    public Set<String> getCompetitorNames() throws IOException {
+        return eventsServiceImpl.getCompetitorNames();
+    }
+    @PostMapping ("/save/competitors")
+    public Set<String> saveCompetitorNames() throws IOException {
+        return eventsServiceImpl.saveCompetitorNames();
+    }
+    @GetMapping("/get/repository/competitors")
+    @ResponseBody
+    public List<Competitor> getAllCompetitors() {
+        return eventsServiceImpl.getAllCompetitors();
     }
 }
