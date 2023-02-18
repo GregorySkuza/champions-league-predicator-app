@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
-
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "id",
@@ -45,7 +42,6 @@ public class Competitor implements Serializable {
     private String gender;
     public Competitor() {
     }
-
     public Competitor(Long competitorId, String id, String name, String country, String countryCode, String abbreviation,
                       String qualifier, String gender) {
         this.competitorId = competitorId;
@@ -57,11 +53,12 @@ public class Competitor implements Serializable {
         this.qualifier = qualifier;
         this.gender = gender;
     }
-
+    public Competitor(String name) {
+        this.name=name;
+    }
     public Long getCompetitorId() {
         return competitorId;
     }
-
     public void setCompetitorId(Long id) {
         this.competitorId = id;
     }
@@ -128,12 +125,10 @@ public class Competitor implements Serializable {
         Competitor that = (Competitor) o;
         return Objects.equals(competitorId, that.competitorId) && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(country, that.country) && Objects.equals(countryCode, that.countryCode) && Objects.equals(abbreviation, that.abbreviation) && Objects.equals(qualifier, that.qualifier) && Objects.equals(gender, that.gender);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(competitorId, id, name, country, countryCode, abbreviation, qualifier, gender);
     }
-
     @Override
     public String toString() {
         return "Competitor{" +
