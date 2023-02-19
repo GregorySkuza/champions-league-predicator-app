@@ -1,5 +1,4 @@
 package pl.gskuza.championsleaguepredictorapp.controller;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.gskuza.championsleaguepredictorapp.model.Competitor;
 import pl.gskuza.championsleaguepredictorapp.model.Events;
 import pl.gskuza.championsleaguepredictorapp.model.EventsContainer;
+import pl.gskuza.championsleaguepredictorapp.model.FilteredEvents;
 import pl.gskuza.championsleaguepredictorapp.service.EventsServiceImpl;
 import java.io.*;
 import java.util.List;
@@ -51,5 +51,9 @@ public class EventsController {
     @ResponseBody
     public List<Competitor> getAllCompetitors() {
         return eventsServiceImpl.getAllCompetitors();
+    }
+    @GetMapping("/filter/{actualNumberOfEvents}")
+    public List<FilteredEvents> getFilteredEvents(@PathVariable int actualNumberOfEvents) throws IOException {
+        return eventsServiceImpl.getFilteredEvents(actualNumberOfEvents);
     }
 }
