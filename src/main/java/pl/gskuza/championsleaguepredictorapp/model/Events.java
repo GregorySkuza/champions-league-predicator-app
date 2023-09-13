@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -71,7 +72,13 @@ public class Events implements Serializable {
         this.probabilityDraw = probabilityDraw;
         this.probabilityAwayTeamWinner = probabilityAwayTeamWinner;
     }
-
+    public Events(String sportEventId, List<String> competitorNames) {
+        this.sportEventId = sportEventId;
+        this.competitors = new ArrayList<>();
+        for (String name : competitorNames) {
+            this.competitors.add(new Competitor(name));
+        }
+    }
     public Long getEventsId() {
         return eventsId;
     }
