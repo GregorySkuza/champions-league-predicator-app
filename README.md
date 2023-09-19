@@ -27,8 +27,8 @@ Here is an example configuration for the application.properties file:
 
 ``` 
 spring.datasource.url=jdbc:mysql://localhost:3306/mydb
-spring.datasource.username=<nazwa_użytkownika>
-spring.datasource.password=<hasło>
+spring.datasource.username=<user_name>
+spring.datasource.password=<password>
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update 
@@ -42,4 +42,4 @@ Here is a sample command that will launch the application from the command line:
 ``` 
 java -jar <file_name>.jar 
 ``` 
-Now you can navigate to http://localhost:8080 in your browser.
+Now you can navigate to http://localhost:8080/swagger-ui.html#/ in your browser.
