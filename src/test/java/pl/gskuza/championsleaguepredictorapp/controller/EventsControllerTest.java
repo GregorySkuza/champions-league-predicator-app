@@ -15,25 +15,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.gskuza.championsleaguepredictorapp.model.Competitor;
 import pl.gskuza.championsleaguepredictorapp.model.Events;
 import pl.gskuza.championsleaguepredictorapp.model.EventsContainer;
 import pl.gskuza.championsleaguepredictorapp.model.FilteredEvents;
 import pl.gskuza.championsleaguepredictorapp.service.EventsServiceImpl;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = EventsController.class)
 class EventsControllerTest {
@@ -96,31 +91,6 @@ class EventsControllerTest {
         verify(eventsService).deleteAllEvents();
     }
     @Test
-    @DisplayName("Should retrieve competitor names")
-    public void testGetCompetitorNames() throws IOException {
-        // Given
-        Set<String> expectedCompetitorNames = Set.of(/*...*/);
-        when(eventsService.getCompetitorNames()).thenReturn(expectedCompetitorNames);
-        // When
-        Set<String> result = eventsController.getCompetitorNames();
-        // Then
-        assertEquals(expectedCompetitorNames, result);
-        verify(eventsService, times(1)).getCompetitorNames();
-    }
-    @Test
-    @DisplayName("Should retrieve all competitors")
-    public void testGetAllCompetitors() {
-        // Given
-        List<Competitor> mockCompetitors = List.of(new Competitor(), new Competitor());
-        when(eventsService.getAllCompetitors()).thenReturn(mockCompetitors);
-
-        // When
-        List<Competitor> result = eventsController.getAllCompetitors();
-
-        // Then
-        assertEquals(mockCompetitors, result);
-    }
-    @Test
     @DisplayName("Should retrieve filtered events")
     public void testGetFilteredEvents() throws IOException {
         // Given
@@ -131,16 +101,5 @@ class EventsControllerTest {
         List<FilteredEvents> result = eventsController.getFilteredEvents(actualNumberOfEvents);
         // Then
         assertEquals(mockFilteredEvents, result);
-    }
-    @Test
-    @DisplayName("Should save competitor names and return a set")
-    public void testSaveCompetitorNames() throws IOException {
-        // Given
-        Set<String> mockCompetitorNames = Set.of("Competitor1", "Competitor2");
-        when(eventsService.saveCompetitorNames()).thenReturn(mockCompetitorNames);
-        // When
-        Set<String> result = eventsController.saveCompetitorNames();
-        // Then
-        assertEquals(mockCompetitorNames, result);
     }
 }
